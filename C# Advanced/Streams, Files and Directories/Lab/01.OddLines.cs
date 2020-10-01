@@ -9,20 +9,17 @@ namespace _01.OddLines
             var reader = new StreamReader(@"..\..\..\Input.txt"); // Create text file, if it doesnt exist!
             var line = reader.ReadLine();
             var counter = 0;
-            var writer = new StreamWriter(@"..\..\..\Output.txt");
+            using var writer = new StreamWriter(@"..\..\..\Output.txt");
 
-            using (writer)
+            while (line != null)
             {
-                while (line != null)
+                if (counter % 2 != 0)
                 {
-                    if (counter % 2 != 0)
-                    {
-                        writer.WriteLine(line);
-                    }
-
-                    counter++;
-                    line = reader.ReadLine();
+                    writer.WriteLine(line);
                 }
+
+                counter++;
+                line = reader.ReadLine();
             }
         }
     }
