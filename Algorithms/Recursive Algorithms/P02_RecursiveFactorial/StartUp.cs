@@ -7,19 +7,18 @@ namespace P02_RecursiveFactorial
         public static void Main()
         {
             var n = int.Parse(Console.ReadLine());
-            Console.WriteLine(FindFacturialRecursion(1, n));
+            Console.WriteLine(FindFacturialRecursion(n));
         }
 
-        private static int FindFacturialRecursion(int factotial, int n)
+        public static int factorial(int n)
         {
-            if (n == 1)
+            if (n <= 1)
             {
-                return factotial;
+                return 1;
             }
-            else
-            {
-                return FindFacturialRecursion(factotial * n, n - 1);
-            }
+
+            var result = n * factorial(n - 1);
+            return result;
         }
     }
 }
