@@ -9,13 +9,11 @@ namespace P04_PizzaCalories
     public class Pizza
     {
         private string name;
-        private Dough dough;
         private List<Topping> toppings;
 
-        public Pizza(string name, Dough dough)
+        public Pizza(string name)
         {
             this.Name = name;
-            this.Dough = dough;
             this.toppings = new List<Topping>();
         }
 
@@ -27,7 +25,7 @@ namespace P04_PizzaCalories
             }
             private set
             {
-                if (string.IsNullOrWhiteSpace(value) || value.Length < 1 || value.Length > 15)
+                if (string.IsNullOrEmpty(value) || value.Length < 1 || value.Length > 15)
                 {
                     throw new InvalidOperationException("Pizza name should be between 1 and 15 symbols.");
                 }
@@ -35,16 +33,19 @@ namespace P04_PizzaCalories
                 this.name = value;
             }
         }
+
+        public int NumberOfToppings => this.toppings.Count;
+
         public Dough Dough { get; set; }
 
         public void AddTopping(Topping topping)
         {
-            this.toppings.Add(topping);
-
-            if (this.toppings.Count >= 10)
+            if (this.NumberOfToppings >= 10)
             {
                 throw new InvalidCountToppingException();
             }
+
+            this.toppings.Add(topping);
         }
 
         public double TotalCalories()

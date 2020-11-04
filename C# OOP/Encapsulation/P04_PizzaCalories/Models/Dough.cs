@@ -9,7 +9,7 @@ namespace P04_PizzaCalories
         private string flourType;
         private string techType;
 
-        public Dough(string flourType, string techType, double grams)// may be occur bug 
+        public Dough(string flourType, string techType, double grams)
         {
             this.FlourType = flourType;
             this.TechType = techType;

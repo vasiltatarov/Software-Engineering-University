@@ -1,4 +1,5 @@
 ﻿using System;
+using P04_PizzaCalories.IO;
 
 namespace P04_PizzaCalories
 {
@@ -6,14 +7,17 @@ namespace P04_PizzaCalories
     {
         public static void Main()
         {
+            var writer = new ConsoleWriter();
+            var reader = new ConsoleReader();
+
             try
             {
-                var engine = new Engine();
+                var engine = new Engine(writer, reader);
                 engine.Run();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                writer.WriteLine(ex.Message);
             }
         }
     }

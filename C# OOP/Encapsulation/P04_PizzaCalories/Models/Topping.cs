@@ -23,7 +23,7 @@ namespace P04_PizzaCalories.Models
             {
                 if (!ToppingValidator.IsValidBakingType(value.ToLower()))
                 {
-                    throw new InvalidBakingTypeException($"Cannot place {value} on top of your pizza.");
+                    throw new InvalidBakingTypeException(string.Format(InvalidBakingTypeException.DEFAULT_MSG, value));
                 }
 
                 this.bakingType = value;
