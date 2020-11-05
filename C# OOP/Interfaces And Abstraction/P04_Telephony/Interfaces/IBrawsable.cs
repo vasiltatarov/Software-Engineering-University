@@ -1,9 +1,7 @@
 ﻿namespace P04_Telephony
 {
-    public interface ISmartphone
+    public interface IBrawsable
     {
-        string Calling(string number);
-
         string Browsing(string URL);
     }
 }

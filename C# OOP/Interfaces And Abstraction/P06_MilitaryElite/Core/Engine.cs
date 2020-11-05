@@ -1,7 +1,8 @@
-﻿using P07MilitaryElite.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
+using System.Collections.Generic;
+using P07MilitaryElite.Models;
+using P07MilitaryElite.IO.Contracts;
 
 namespace P07MilitaryElite
 {
@@ -9,11 +10,15 @@ namespace P07MilitaryElite
     {
         private List<ISoldier> soldiers;
         private List<IPrivate> privates;
+        private Iwriter writer;
+        private IReader reader;
 
-        public Engine()
+        public Engine(Iwriter consoleWriter, IReader consoleReader)
         {
             this.soldiers = new List<ISoldier>();
             this.privates = new List<IPrivate>();
+            this.writer = consoleWriter;
+            this.reader = consoleReader;
         }
 
         public void Run()
@@ -22,7 +27,7 @@ namespace P07MilitaryElite
             {
                 try
                 {
-                    var command = Console.ReadLine();
+                    var command = this.reader.ReadLine();
 
                     if (command == "End")
                     {
@@ -112,7 +117,7 @@ namespace P07MilitaryElite
             {
                 try
                 {
-                    Console.WriteLine(soldier);
+                    this.writer.WriteLine(soldier.ToString());
                 }
                 catch (Exception)
                 {
