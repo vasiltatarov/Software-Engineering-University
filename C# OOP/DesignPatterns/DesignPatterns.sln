@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facade", "Facade\Facade.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandPattern", "CommandPattern\CommandPattern.csproj", "{F0A862C5-704B-4C9C-8204-2B80FEB666A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototype", "Prototype\Prototype.csproj", "{B0A30397-A92B-4709-BFE2-C2404F0883F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototype", "Prototype\Prototype.csproj", "{B0A30397-A92B-4709-BFE2-C2404F0883F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Composite", "Composite\Composite.csproj", "{C8D2483D-628A-419C-A730-18B739D9F85D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Composite", "Composite\Composite.csproj", "{C8D2483D-628A-419C-A730-18B739D9F85D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemplatePattern", "TemplatePattern\TemplatePattern.csproj", "{82820FA2-E825-44EF-A12E-2DDC1CBC320E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{C8D2483D-628A-419C-A730-18B739D9F85D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8D2483D-628A-419C-A730-18B739D9F85D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8D2483D-628A-419C-A730-18B739D9F85D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82820FA2-E825-44EF-A12E-2DDC1CBC320E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82820FA2-E825-44EF-A12E-2DDC1CBC320E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82820FA2-E825-44EF-A12E-2DDC1CBC320E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82820FA2-E825-44EF-A12E-2DDC1CBC320E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
