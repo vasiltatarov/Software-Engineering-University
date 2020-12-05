@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using RobotService.Core.Contracts;
+using RobotService.Factories;
 using RobotService.Models.Garages;
 using RobotService.Models.Garages.Contracts;
 using RobotService.Models.Procedures;
 using RobotService.Models.Procedures.Contracts;
-using RobotService.Models.Robots;
 using RobotService.Models.Robots.Contracts;
 using RobotService.Utilities.Messages;
 
@@ -13,7 +14,9 @@ namespace RobotService.Core
 {
     public class Controller : IController
     {
-        private IGarage garage;
+        private readonly RobotFactory robotFactory;
+        private readonly IGarage garage;
+        private readonly Dictionary<string, IProcedure> procedures;
         private IProcedure chip;
         private IProcedure techCheck;
         private IProcedure rest;
@@ -23,35 +26,32 @@ namespace RobotService.Core
 
         public Controller()
         {
+            this.robotFactory = new RobotFactory();
             this.garage = new Garage();
+            this.procedures = new Dictionary<string, IProcedure>();
+            this.InitializeProcedures();
+        }
+
+        private void InitializeProcedures()
+        {
             this.chip = new Chip();
             this.techCheck = new TechCheck();
             this.rest = new Rest();
             this.work = new Work();
             this.charge = new Charge();
             this.polish = new Polish();
+
+            procedures.Add("Chip", this.chip);
+            procedures.Add("TechCheck", this.techCheck);
+            procedures.Add("Rest", this.rest);
+            procedures.Add("Work", this.work);
+            procedures.Add("Charge", this.charge);
+            procedures.Add("Polish", this.polish);
         }
 
         public string Manufacture(string robotType, string name, int energy, int happiness, int procedureTime)
         {
-            IRobot robot = null;
-
-            if (robotType == "HouseholdRobot")
-            {
-                robot = new HouseholdRobot(name, energy, happiness, procedureTime);
-            }
-            else if (robotType == "PetRobot")
-            {
-                robot = new PetRobot(name, energy, happiness, procedureTime);
-            }
-            else if (robotType == "WalkerRobot")
-            {
-                robot = new WalkerRobot(name, energy, happiness, procedureTime);
-            }
-            else
-            {
-                throw new ArgumentException(string.Format(ExceptionMessages.InvalidRobotType, robotType));
-            }
+            IRobot robot = this.robotFactory.CreateRobot(robotType, name, energy, happiness, procedureTime);
 
             this.garage.Manufacture(robot);
 
@@ -144,34 +144,8 @@ namespace RobotService.Core
 
         public string History(string procedureType)
         {
-            if (procedureType == "Chip")
-            {
-                return this.chip.History();
-            }
-            else if (procedureType == "TechCheck")
-            {
-                return this.techCheck.History();
-            }
-            else if (procedureType == "Rest")
-            {
-                return this.rest.History();
-            }
-            else if (procedureType == "Work")
-            {
-                return this.work.History();
-            }
-            else if (procedureType == "Charge")
-            {
-                return this.charge.History();
-            }
-            else if (procedureType == "Polish")
-            {
-                return this.polish.History();
-            }
-            else
-            {
-                return null;
-            }
+            IProcedure procedure = this.procedures[procedureType];
+            return procedure.History();
         }
 
         private void EnsureRobotExist(string robotName)
