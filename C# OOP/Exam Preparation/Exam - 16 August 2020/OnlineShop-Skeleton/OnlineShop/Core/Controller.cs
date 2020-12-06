@@ -2,114 +2,71 @@
 using System.Collections.Generic;
 using System.Linq;
 using OnlineShop.Common.Constants;
-using OnlineShop.Common.Enums;
+using OnlineShop.Factories;
 using OnlineShop.Models.Products.Components;
 using OnlineShop.Models.Products.Computers;
 using OnlineShop.Models.Products.Peripherals;
-using IComponent = OnlineShop.Models.Products.Components.IComponent;
 
 namespace OnlineShop.Core
 {
     public class Controller : IController
     {
-        private ICollection<IComputer> computers;
-        private ICollection<IComponent> components;
-        private ICollection<IPeripheral> peripherals;
+        private readonly Dictionary<int, IComputer> _computers;
+        private readonly Dictionary<int, IComponent> _components;
+        private readonly Dictionary<int, IPeripheral> _peripherals;
+        private readonly Factory _factory;
 
         public Controller()
         {
-            this.computers = new List<IComputer>();
-            this.components = new List<IComponent>();
-            this.peripherals = new List<IPeripheral>();
+            _computers = new Dictionary<int, IComputer>();
+            _components = new Dictionary<int, IComponent>();
+            _peripherals = new Dictionary<int, IPeripheral>();
+            _factory = new Factory();
         }
 
         public string AddComputer(string computerType, int id, string manufacturer, string model, decimal price)
         {
-            IComputer computer = null;
-
-            if (computerType == ComputerType.DesktopComputer.ToString())
-            {
-                computer = new DesktopComputer(id, manufacturer, model, price);
-            }
-            else if (computerType == ComputerType.Laptop.ToString())
-            {
-                computer = new Laptop(id, manufacturer, model, price);
-            }
-            else
-            {
-                throw new ArgumentException(ExceptionMessages.InvalidComputerType);
-            }
-
-            if (this.computers.Any(x => x.Id == id))
+            if (_computers.ContainsKey(id))
             {
                 throw new ArgumentException(ExceptionMessages.ExistingComputerId);
             }
 
-            this.computers.Add(computer);
+            IComputer computer = _factory.CreateComputer(computerType, id, manufacturer, model, price);
+
+            _computers.Add(id, computer);
+
             return string.Format(SuccessMessages.AddedComputer, id);
         }
 
         public string AddPeripheral(int computerId, int id, string peripheralType, string manufacturer, string model, decimal price,
             double overallPerformance, string connectionType)
         {
-            IPeripheral peripheral = null;
+            CheckIfComputerIdExist(computerId);
+            IComputer computer = _computers[computerId];
 
-            if (peripheralType == PeripheralType.Headset.ToString())
-            {
-                peripheral = new Headset(id, manufacturer, model, price, overallPerformance, connectionType);
-            }
-            else if (peripheralType == PeripheralType.Keyboard.ToString())
-            {
-                peripheral = new Keyboard(id, manufacturer, model, price, overallPerformance, connectionType);
-            }
-            else if (peripheralType == PeripheralType.Monitor.ToString())
-            {
-                peripheral = new Monitor(id, manufacturer, model, price, overallPerformance, connectionType);
-            }
-            else if (peripheralType == PeripheralType.Mouse.ToString())
-            {
-                peripheral = new Mouse(id, manufacturer, model, price, overallPerformance, connectionType);
-            }
-            else
-            {
-                throw new ArgumentException(ExceptionMessages.InvalidPeripheralType);
-            }
-
-            if (this.peripherals.Any(x => x.Id == id))
+            if (_peripherals.ContainsKey(id))
             {
                 throw new ArgumentException(ExceptionMessages.ExistingPeripheralId);
             }
 
-            var computer = this.computers.FirstOrDefault(x => x.Id == computerId);
-
-            if (computer == null)
-            {
-                throw new ArgumentException(ExceptionMessages.NotExistingComputerId);
-            }
+            IPeripheral peripheral = _factory.CreatePeripheral(id, peripheralType, manufacturer, model, price,
+                overallPerformance, connectionType);
 
             computer.AddPeripheral(peripheral);
-            this.peripherals.Add(peripheral);
+            _peripherals.Add(id, peripheral);
 
             return string.Format(SuccessMessages.AddedPeripheral, peripheralType, id, computerId);
+
         }
 
         public string RemovePeripheral(string peripheralType, int computerId)
         {
-            var computer = this.computers.FirstOrDefault(x => x.Id == computerId);
+            CheckIfComputerIdExist(computerId);
+            IComputer computer = _computers[computerId];
 
-            if (computer == null)
-            {
-                throw new ArgumentException(ExceptionMessages.NotExistingComputerId);
-            }
+            IPeripheral peripheral = computer.RemovePeripheral(peripheralType);
 
-            computer.RemovePeripheral(peripheralType);
-
-            var peripheral = this.peripherals.FirstOrDefault(x => x.GetType().Name == peripheralType);
-
-            if (peripheral != null)
-            {
-                this.peripherals.Remove(peripheral);
-            }
+            _peripherals.Remove(peripheral.Id);
 
             return string.Format(SuccessMessages.RemovedPeripheral, peripheralType, peripheral.Id);
         }
@@ -117,125 +74,87 @@ namespace OnlineShop.Core
         public string AddComponent(int computerId, int id, string componentType, string manufacturer, string model, decimal price,
             double overallPerformance, int generation)
         {
-            IComponent component = null;
+            CheckIfComputerIdExist(computerId);
 
-            if (componentType == ComponentType.CentralProcessingUnit.ToString())
+            IComputer computer = _computers[computerId];
+
+            if (_components.ContainsKey(id))
             {
-                component = new CentralProcessingUnit(id, manufacturer, model, price, overallPerformance, generation);
-            }
-            else if (componentType == ComponentType.Motherboard.ToString())
-            {
-                component = new Motherboard(id, manufacturer, model, price, overallPerformance, generation);
-            }
-            else if (componentType == ComponentType.PowerSupply.ToString())
-            {
-                component = new PowerSupply(id, manufacturer, model, price, overallPerformance, generation);
-            }
-            else if (componentType == ComponentType.RandomAccessMemory.ToString())
-            {
-                component = new RandomAccessMemory(id, manufacturer, model, price, overallPerformance, generation);
-            }
-            else if (componentType == ComponentType.SolidStateDrive.ToString())
-            {
-                component = new SolidStateDrive(id, manufacturer, model, price, overallPerformance, generation);
-            }
-            else if (componentType == ComponentType.VideoCard.ToString())
-            {
-                component = new VideoCard(id, manufacturer, model, price, overallPerformance, generation);
-            }
-            else
-            {
-                throw new ArgumentException(ExceptionMessages.InvalidComponentType);
+                throw new ArgumentException(ExceptionMessages.ExistingComponentId);
             }
 
-            this.EnsureComponentIdIsUnique(id);
-
-            var computer = this.computers.FirstOrDefault(x => x.Id == computerId);
-
-            if (computer == null)
-            {
-                throw new ArgumentException(ExceptionMessages.NotExistingComputerId);
-            }
+            IComponent component = _factory.CreateComponent(id, componentType, manufacturer, model, price,
+                overallPerformance, generation);
 
             computer.AddComponent(component);
-            this.components.Add(component);
+            _components.Add(id, component);
 
             return string.Format(SuccessMessages.AddedComponent, componentType, id, computerId);
         }
 
         public string RemoveComponent(string componentType, int computerId)
         {
-            var computer = this.computers.FirstOrDefault(x => x.Id == computerId);
+            CheckIfComputerIdExist(computerId);
+            IComputer computer = _computers[computerId];
 
-            if (computer == null)
-            {
-                throw new ArgumentException(ExceptionMessages.NotExistingComputerId);
-            }
+            IComponent component = computer.RemoveComponent(componentType);
 
-            computer.RemoveComponent(componentType);
-
-            var component = this.components.FirstOrDefault(x => x.GetType().Name == componentType);
-
-            if (component != null)
-            {
-                this.components.Remove(component);
-            }
+            _components.Remove(component.Id);
 
             return string.Format(SuccessMessages.RemovedComponent, componentType, component.Id);
         }
 
         public string BuyComputer(int id)
         {
-            var computer = this.computers.FirstOrDefault(x => x.Id == id);
+            CheckIfComputerIdExist(id);
 
-            if (computer == null)
-            {
-                throw new ArgumentException(ExceptionMessages.NotExistingComputerId);
-            }
+            IComputer computer = _computers[id];
+            _computers.Remove(id);
 
-            var result = computer.ToString();
-            this.computers.Remove(computer);
-            return result;
+            return computer.ToString();
         }
 
         public string BuyBest(decimal budget)
         {
-            if (this.computers.Count == 0)
+            if (_computers.Count == 0)
             {
                 throw new ArgumentException(string.Format(ExceptionMessages.CanNotBuyComputer, budget));
             }
 
-            IComputer computer = this.computers
-                .Where(x => x.Price <= budget)
-                .OrderByDescending(x => x.OverallPerformance)
-                .FirstOrDefault();
+            var computersCanBuy = _computers.Where(x => x.Value.Price <= budget)
+                .OrderByDescending(x => x.Value.Price)
+                .ToDictionary(x => x.Key, x => x.Value);
 
-            if (computer == null)
+            if (computersCanBuy.Count == 0)
             {
                 throw new ArgumentException(string.Format(ExceptionMessages.CanNotBuyComputer, budget));
             }
 
-            this.computers.Remove(computer);
+            IComputer computer = null;
+
+            foreach (var kvp in computersCanBuy)
+            {
+                computer = kvp.Value;
+                break;
+            }
+
+            _computers.Remove(computer.Id);
+
             return computer.ToString();
         }
 
         public string GetComputerData(int id)
         {
-            var computer = this.computers.FirstOrDefault(x => x.Id == id);
+            CheckIfComputerIdExist(id);
 
-            if (computer == null)
-            {
-                throw new ArgumentException(ExceptionMessages.NotExistingComputerId);
-            }
-
-            return computer.ToString();
+            return _computers[id].ToString();
         }
 
-        private void EnsureComponentIdIsUnique(int id)
+        private void CheckIfComputerIdExist(int id)
         {
-            if (this.components.Any(x => x.Id == id))
+            if (!_computers.ContainsKey(id))
             {
-                throw new ArgumentException(ExceptionMessages.ExistingComponentId);
+                throw new ArgumentException(ExceptionMessages.NotExistingComputerId);
             }
         }
     }
