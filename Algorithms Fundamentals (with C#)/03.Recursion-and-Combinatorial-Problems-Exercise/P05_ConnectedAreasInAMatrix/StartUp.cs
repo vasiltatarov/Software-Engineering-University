@@ -22,35 +22,29 @@ namespace P05_ConnectedAreasInAMatrix
     {
         private static char[,] matrix;
         private static bool[,] visited;
+        private static List<Area> areas;
 
-        static void Main()
+        static void Main(string[] args)
         {
-            var rows = int.Parse(Console.ReadLine());
-            var cols = int.Parse(Console.ReadLine());
+            var row = int.Parse(Console.ReadLine());
+            var col = int.Parse(Console.ReadLine());
 
-            matrix = new char[rows, cols];
-            visited = new bool[rows, cols];
-            var areas = new List<Area>();
-
-            ReadMatrixData();
+            matrix = ReadMatrix(row, col);
+            visited = new bool[row, col];
+            areas = new List<Area>();
 
             for (int r = 0; r < matrix.GetLength(0); r++)
             {
                 for (int c = 0; c < matrix.GetLength(1); c++)
                 {
-                    if (matrix[r, c] == '*')
+                    if (IsWall(r, c) ||
+                        visited[r, c])
                     {
                         continue;
                     }
 
-                    if (visited[r, c])
-                    {
-                        continue;
-                    }
-
-                    var size = ConnectedArea(r, c);
+                    var size = FindConnectedSize(r, c);
                     var area = new Area(r, c, size);
-
                     areas.Add(area);
                 }
             }
@@ -61,6 +55,7 @@ namespace P05_ConnectedAreasInAMatrix
                 .ThenBy(x => x.Col)
                 .ToList();
 
+
             PrintAreas(orderedAreas);
         }
 
@@ -70,23 +65,15 @@ namespace P05_ConnectedAreasInAMatrix
 
             for (int i = 0; i < areas.Count; i++)
             {
-                Console.WriteLine($"Area #{i+1} at ({areas[i].Row}, {areas[i].Col}), size: {areas[i].Size}");
+                Console.WriteLine($"Area #{i + 1} at ({areas[i].Row}, {areas[i].Col}), size: {areas[i].Size}");
             }
         }
 
-        private static int ConnectedArea(int row, int col)
+        private static int FindConnectedSize(int row, int col)
         {
-            if (IsOutside(row, col))
-            {
-                return 0;
-            }
-
-            if (matrix[row, col] == '*')
-            {
-                return 0;
-            }
-
-            if (visited[row, col])
+            if (IsOutside(row, col) ||
+                IsWall(row, col) ||
+                visited[row, col])
             {
                 return 0;
             }
@@ -94,30 +81,33 @@ namespace P05_ConnectedAreasInAMatrix
             visited[row, col] = true;
 
             return 1 +
-                   ConnectedArea(row - 1, col) +
-                   ConnectedArea(row + 1, col) +
-                   ConnectedArea(row, col - 1) +
-                   ConnectedArea(row, col + 1);
+                    FindConnectedSize(row - 1, col) +
+                    FindConnectedSize(row + 1, col) +
+                    FindConnectedSize(row, col - 1) +
+                    FindConnectedSize(row, col + 1);
         }
 
         private static bool IsOutside(int row, int col)
-            => row < 0 ||
-               col < 0 ||
-               row >= matrix.GetLength(0) ||
-               col >= matrix.GetLength(1);
+            => row < 0 || row >= matrix.GetLength(0) || col < 0 || col >= matrix.GetLength(1);
 
+        private static bool IsWall(int row, int col)
+            => matrix[row, col] == '*';
 
-        private static void ReadMatrixData()
+        private static char[,] ReadMatrix(int row, int col)
         {
-            for (int r = 0; r < matrix.GetLength(0); r++)
+            var result = new char[row, col];
+
+            for (int r = 0; r < row; r++)
             {
                 var data = Console.ReadLine();
 
-                for (int c = 0; c < matrix.GetLength(1); c++)
+                for (int c = 0; c < col; c++)
                 {
-                    matrix[r, c] = data[c];
+                    result[r, c] = data[c];
                 }
             }
+
+            return result;
         }
     }
 }
