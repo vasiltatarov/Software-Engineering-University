@@ -16,27 +16,11 @@ namespace P07_MinimumEditDistance
             var str1 = Console.ReadLine();
             var str2 = Console.ReadLine();
 
-            //if (str1 == str2)
-            //{
-            //    Console.WriteLine("Minimum edit distance: 0");
-            //    return;
-            //}
-
             var table = new int[str1.Length + 1, str2.Length + 1];
 
             var editCount = GetMinimumEditDistance(table, str1, str2);
 
             Console.WriteLine($"Minimum edit distance: {editCount}");
-
-            //for (int i = 0; i < table.GetLength(0); i++)
-            //{
-            //    for (int j = 0; j < table.GetLength(1); j++)
-            //    {
-            //        Console.Write(table[i,j] + " ");
-            //    }
-
-            //    Console.WriteLine();
-            //}
         }
 
         private static int GetMinimumEditDistance(int[,] table, string str1, string str2)
@@ -44,13 +28,13 @@ namespace P07_MinimumEditDistance
             //Fill first row
             for (int r = 1; r < table.GetLength(0); r++)
             {
-                table[r, 0] = r;
+                table[r, 0] = r * deleteCost;
             }
 
             //Fill first col
-            for (int c = 0; c < table.GetLength(1); c++)
+            for (int c = 1; c < table.GetLength(1); c++)
             {
-                table[0, c] = c;
+                table[0, c] = c * insertCost;
             }
 
             for (int r = 1; r < table.GetLength(0); r++)
@@ -63,8 +47,11 @@ namespace P07_MinimumEditDistance
                     }
                     else
                     {
-                        var min = Math.Min(Math.Min(table[r - 1, c], table[r, c - 1]), table[r - 1, c - 1]);
-                        table[r, c] = min + 1;
+                        var replace = table[r - 1, c - 1] + replaceCost;
+                        var insert = table[r - 1, c] + deleteCost;
+                        var delete = table[r, c - 1] + insertCost;
+
+                        table[r, c] = Math.Min(Math.Min(replace, insert), delete);
                     }
                 }
             }
