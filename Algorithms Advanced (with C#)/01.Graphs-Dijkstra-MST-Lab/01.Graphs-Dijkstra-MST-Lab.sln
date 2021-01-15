@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "P01_Dijkstra's Algorithm", "P01_Dijkstra's Algorithm\P01_Dijkstra's Algorithm.csproj", "{15275882-3FDC-4A3F-92DA-C4C8E8C90B46}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P01_Dijkstra_s_Algorithm_FrameworkExc", "P01_Dijkstra_s_Algorithm_FrameworkExc\P01_Dijkstra_s_Algorithm_FrameworkExc.csproj", "{3605D511-7F74-4226-882D-B980E903EC61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P02_Kruskal’sAlgorithm", "P02_Kruskal’sAlgorithm\P02_Kruskal’sAlgorithm.csproj", "{3377372A-4871-46C5-933F-EF404310634B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P03_Prim's Algorithm", "P03_Prim's Algorithm\P03_Prim's Algorithm.csproj", "{59D9FA86-EC43-4CF8-98F1-E8EF6D695836}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15275882-3FDC-4A3F-92DA-C4C8E8C90B46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15275882-3FDC-4A3F-92DA-C4C8E8C90B46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15275882-3FDC-4A3F-92DA-C4C8E8C90B46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15275882-3FDC-4A3F-92DA-C4C8E8C90B46}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3605D511-7F74-4226-882D-B980E903EC61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3605D511-7F74-4226-882D-B980E903EC61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3605D511-7F74-4226-882D-B980E903EC61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3605D511-7F74-4226-882D-B980E903EC61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3377372A-4871-46C5-933F-EF404310634B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3377372A-4871-46C5-933F-EF404310634B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3377372A-4871-46C5-933F-EF404310634B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3377372A-4871-46C5-933F-EF404310634B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59D9FA86-EC43-4CF8-98F1-E8EF6D695836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D9FA86-EC43-4CF8-98F1-E8EF6D695836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D9FA86-EC43-4CF8-98F1-E8EF6D695836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D9FA86-EC43-4CF8-98F1-E8EF6D695836}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BADDE764-57B9-4D46-82BB-CB33FD069BD8}
+	EndGlobalSection
+EndGlobal
