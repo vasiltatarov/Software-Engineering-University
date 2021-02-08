@@ -1,3 +1,5 @@
+USE Bakery
+
 CREATE VIEW v_UserWithCountries
 AS
 SELECT CONCAT(c.FirstName, ' ', c.LastName) AS [CustomerName],
