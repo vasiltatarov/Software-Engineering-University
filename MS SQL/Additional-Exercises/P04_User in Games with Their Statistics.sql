@@ -1,20 +1,26 @@
 USE Diablo
-GO
-
---SELECT *
---FROM Characters AS ch
---Join [Statistics] AS s ON ch.StatisticId = s.Id
 
 SELECT u.Username,
-		g.[Name],
-		*
-FROM GameTypeForbiddenItems AS gti
-JOIN GameTypes AS gt ON gti.GameTypeId = gt.Id
-JOIN Items AS i ON gti.ItemId = i.id
-JOIN [Statistics] AS s ON i.StatisticId = s.Id
-JOIN Characters AS ch ON s.Id = ch.StatisticId
-JOIN UserGameItems AS ugi ON i.Id = ugi.ItemId
-JOIN UsersGames AS ug ON ugi.UserGameId = ug.Id
-JOIN Users AS u ON ug.UserId = u.Id
+		g.[Name] AS [Game],
+		MAX(ch.[Name]) AS [Character],
+		(SUM(iSt.Strength) + MAX(gSt.Strength) + MAX(chSt.Strength)) AS [Strength],
+		(SUM(iSt.Defence) + MAX(gSt.Defence) + MAX(chSt.Defence)) AS [Defence],
+		(SUM(iSt.Speed) + MAX(gSt.Speed) + MAX(chSt.Speed)) AS [Speed],
+		(SUM(iSt.Mind) + MAX(gSt.Mind) + MAX(chSt.Mind)) AS [Mind],
+		(SUM(iSt.Luck) + MAX(gSt.Luck) + MAX(chSt.Luck)) AS [Luck]
+FROM Users AS u
+JOIN UsersGames AS ug ON u.Id = ug.UserId
+JOIN Characters AS ch ON ug.CharacterId = ch.Id
+JOIN [Statistics] AS chSt ON chSt.Id = ch.StatisticId
 JOIN Games AS g ON ug.GameId = g.Id
-WHERE g.Name LIKE 'Rose Fire & Ice'
+JOIN GameTypes AS gt ON gt.Id = g.GameTypeId
+JOIN [Statistics] AS gSt ON gSt.Id = gt.BonusStatsId
+JOIN UserGameItems AS ugi ON ugi.UserGameId = ug.Id
+JOIN Items AS i ON ugi.ItemId = i.Id
+JOIN [Statistics] AS iSt ON iSt.Id = i.StatisticId
+GROUP BY u.Username, g.[Name]
+ORDER BY [Strength] DESC,
+		 [Defence] DESC,
+		 [Speed] DESC,
+		 [Mind] DESC,
+		 [Luck] DESC
