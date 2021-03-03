@@ -15,6 +15,9 @@ namespace CarDealer.Models
 
         public long TravelledDistance { get; set; }
 
+        [NotMapped]
+        public int[] PartsId { get; set; }
+
         public ICollection<Sale> Sales { get; set; }
 
         public ICollection<PartCar> PartCars { get; set; } = new List<PartCar>();
