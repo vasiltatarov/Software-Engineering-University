@@ -3,16 +3,16 @@ using System.Xml.Serialization;
 
 namespace CarDealer.Dtos.Import
 {
-    [XmlType("Customer")]
+    [XmlType("CustomerName")]
     public class CustomerDTO
     {
-        [XmlAttribute("name")]
+        [XmlElement("name")]
         public string Name { get; set; }
 
-        [XmlAttribute("birthDate")]
+        [XmlElement("birthDate")]
         public DateTime BirthDate { get; set; }
 
-        [XmlAttribute("isYoungDriver")]
+        [XmlElement("isYoungDriver")]
         public bool IsYoungDriver { get; set; }
     }
 }
