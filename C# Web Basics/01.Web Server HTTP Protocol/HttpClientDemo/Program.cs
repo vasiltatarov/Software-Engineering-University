@@ -23,35 +23,40 @@ namespace HttpClientDemo
 
             while (true)
             {
-                var client = tcpListener.AcceptTcpClient();
-                using var stream = client.GetStream();
+                var client = await tcpListener.AcceptTcpClientAsync();
+                await Task.Run(() => ProcessClientAsync(client));
+            }
+        }
 
-                var buffer = new byte[1000000];
-                var length = stream.Read(buffer, 0, buffer.Length);
+        private static async Task ProcessClientAsync(TcpClient client)
+        {
+            using var stream = client.GetStream();
 
-                var requestString = Encoding.UTF8.GetString(buffer, 0, length);
+            var buffer = new byte[1000000];
+            var length = await stream.ReadAsync(buffer, 0, buffer.Length);
 
-                Console.WriteLine(requestString);
+            var requestString = Encoding.UTF8.GetString(buffer, 0, length);
 
-                var html = $"<h1>Hello from VaskoServer {DateTime.UtcNow}</h1>" +
-                           $"<form method=post><input name=username /><br /><input name=password/><br />" +
-                           $"<input type=submit /></form>";
+            Console.WriteLine(requestString);
 
-                //var responce = ResponseStatus200OK(html);
-                //var responce = ResponceStatusRedirect(html);
-                //var responce = ResponceContentDisposition(html);
+            var html = $"<h1>Hello from VaskoServer {DateTime.UtcNow}</h1>" +
+                       $"<form method=post><input name=username /><br /><input name=password/><br />" +
+                       $"<input type=submit /></form>";
 
-                var responce = "HTTP/1.1 200 OK" + NewLine +
+            //var responce = ResponseStatus200OK(html);
+            //var responce = ResponceStatusRedirect(html);
+            //var responce = ResponceContentDisposition(html);
+
+            var responce = "HTTP/1.1 200 OK" + NewLine +
                            "Server: VaskoServer 2021" + NewLine +
                            "Content-Type: text/html; charset=utf-8" + NewLine +
                            "Content-Length: " + html.Length + NewLine +
                            NewLine + html + NewLine;
 
-                var responseBytes = Encoding.UTF8.GetBytes(responce);
-                stream.Write(responseBytes);
+            var responseBytes = Encoding.UTF8.GetBytes(responce);
+            await stream.WriteAsync(responseBytes);
 
-                Console.WriteLine(new string('=', 70));
-            }
+            Console.WriteLine(new string('=', 70));
         }
 
         // Response with download file
