@@ -27,9 +27,9 @@ namespace ProductShop
             //ImportCategories(db);
             //ImportCategoriesAndProducts(db);
 
-            ExportSuccessfullySoldProducts(db);
+            //ExportSuccessfullySoldProducts(db);
 
-            //ExportUsersAndProducts(db);
+            ExportUsersAndProducts(db);
         }
 
         private static void InitializeMapper()
@@ -56,9 +56,11 @@ namespace ProductShop
         public static string GetUsersWithProducts(ProductShopContext context)
         {
             var users = context.Users
+                .ToList()
                 .Where(u => u.ProductsSold.Any(p => p.Buyer != null))
                 .Select(u => new
                 {
+                    firstName = u.FirstName,
                     lastName = u.LastName,
                     age = u.Age,
                     soldProducts = new
