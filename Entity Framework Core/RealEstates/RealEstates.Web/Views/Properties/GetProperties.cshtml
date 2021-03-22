@@ -1,0 +1,150 @@
+﻿@model PagedList.IPagedList<RealEstates.Services.Models.PropertyInfoDto>
+
+@{
+    var count = 1;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>@ViewData["Title"] - RealEstates.Web</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="~/assets/img/favicon.png" rel="icon">
+    <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="~/assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <main id="main">
+
+        <!-- ======= Intro Single ======= -->
+        <section class="intro-single">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-8">
+                        <div class="title-single-box">
+                            <h1 class="title-single">Our Amazing Properties</h1>
+                            <span class="color-text-a">Properties</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-4">
+                        <nav aria-label="breadcrumb" class="breadcrumb-box d-flex justify-content-lg-end">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="#">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Properties Grid
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section><!-- End Intro Single-->
+        <div class="container">
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Квартал</th>
+                        <th>Строителство</th>
+                        <th>Тип</th>
+                        <th>Цена €</th>
+                        <th>Размер m²</th>
+                        <th>Година</th>
+                        <th>Етаж</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var property in this.Model)
+                    {
+                        var floors = $"{property.Floor}/{property.TotalFloor}";
+                        <tr>
+                            <th>@(count++)</th>
+                            <td>@property.DistrictName</td>
+                            <td>@property.BuildingType</td>
+                            <td>@property.PropertyType</td>
+                            <td>@property.Price</td>
+                            <td>@property.Size</td>
+                            <td>@(property.Year == 0 ? "--" : property.Year)</td>
+                            <td>@(property.Floor == 0 ? "--" : (floors))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ======= Pagination ======= -->
+        <nav>
+            <ul class="pagination pagination pagination justify-content-center">
+                @if (this.Model.PageNumber == 1)
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="GetProperties" asp-route-items="@this.Model" asp-route-page="@(this.Model.PageNumber - 1)">
+                            <i class="fas fa-angle-double-left"></i>
+                        </a>
+                    </li>
+                }
+
+                @for (int i = 1; i <= this.Model.PageCount; i++)
+                {
+                    var active = i == this.Model.PageNumber ? " active" : string.Empty;
+                    <li class="page-item @active">
+                        <a class="page-link" asp-action="GetProperties" asp-route-items="@this.Model" asp-route-page="@i">@i</a>
+                    </li>
+                }
+
+                @if (this.Model.PageNumber == this.Model.PageCount)
+                {
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="GetProperties" asp-route-items="@this.Model" asp-route-page="@(this.Model.PageNumber + 1)">
+                            <i class="fas fa-angle-double-right"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+        <!-- End Pagination-->
+
+        <div id="preloader"></div>
+        <a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+            <i class="bi bi-arrow-up-short"></i>
+        </a>
+    </main>
+</body>
+
+</html>
