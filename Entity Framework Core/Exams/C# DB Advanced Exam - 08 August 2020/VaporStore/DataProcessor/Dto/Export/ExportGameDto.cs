@@ -6,7 +6,7 @@ namespace VaporStore.DataProcessor.Dto.Export
     public class ExportGameDto
     {
         [XmlAttribute("title")]
-        public string Name { get; set; }
+        public string Title { get; set; }
 
         [XmlElement("Genre")]
         public string Genre { get; set; }

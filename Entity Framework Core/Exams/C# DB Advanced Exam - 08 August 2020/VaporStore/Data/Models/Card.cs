@@ -27,6 +27,6 @@ namespace VaporStore.Data.Models
 
         public User User { get; set; }
 
-        public ICollection<Purchase> Purchases { get; set; }
+        public virtual ICollection<Purchase> Purchases { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using System;
+using System.Xml.Serialization;
 
 namespace VaporStore.DataProcessor.Dto.Export
 {
@@ -14,6 +15,7 @@ namespace VaporStore.DataProcessor.Dto.Export
         [XmlElement("Date")]
         public string Date { get; set; }
 
+        [XmlElement("Game")]
         public ExportGameDto Game { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public enum PurchaseType
     {
-        Retail = 0,
-        Digital = 1,
+        Retail,
+        Digital
     }
 }

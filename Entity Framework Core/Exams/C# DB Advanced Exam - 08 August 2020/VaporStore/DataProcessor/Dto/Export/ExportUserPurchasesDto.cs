@@ -3,7 +3,7 @@
 namespace VaporStore.DataProcessor.Dto.Export
 {
     [XmlType("User")]
-    public class ExportUserDto
+    public class ExportUserPurchasesDto
     {
         [XmlAttribute("username")]
         public string Username { get; set; }
