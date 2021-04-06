@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.Serialization;
+using BookShop.Data.Models.Enums;
 
 namespace BookShop.DataProcessor.ImportDto
 {
@@ -12,13 +13,10 @@ namespace BookShop.DataProcessor.ImportDto
         [XmlElement("Name")]
         public string Name { get; set; }
 
-        [Required]
-        [Range(1, 3)]
         [XmlElement("Genre")]
         public int Genre { get; set; }
 
-        [Required]
-        [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
+        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
         [XmlElement("Price")]
         public decimal Price { get; set; }
 
@@ -26,7 +24,7 @@ namespace BookShop.DataProcessor.ImportDto
         [XmlElement("Pages")]
         public int Pages { get; set; }
 
-        [XmlElement("PublishedOn")]
+        [Required]
         public string PublishedOn { get; set; }
     }
 }

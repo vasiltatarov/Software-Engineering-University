@@ -21,7 +21,7 @@ namespace BookShop.Data.Models
 
         public Genre Genre { get; set; }
 
-        [Range(typeof(decimal), "0", "79228162514264337593543950335")]
+        [Range(typeof(decimal), "0.01", "79228162514264337593543950335")]
         public decimal Price { get; set; }
 
         [Range(50, 5000)]
@@ -29,6 +29,6 @@ namespace BookShop.Data.Models
 
         public DateTime PublishedOn { get; set; }
 
-        public ICollection<AuthorBook> AuthorsBooks { get; set; }
+        public virtual ICollection<AuthorBook> AuthorsBooks { get; set; }
     }
 }

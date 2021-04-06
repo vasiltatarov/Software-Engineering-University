@@ -30,6 +30,6 @@ namespace BookShop.Data.Models
         [RegularExpression(@"^[0-9]{3}-[0-9]{3}-[0-9]{4}$")]
         public string Phone { get; set; }
 
-        public ICollection<AuthorBook> AuthorsBooks { get; set; }
+        public virtual ICollection<AuthorBook> AuthorsBooks { get; set; }
     }
 }

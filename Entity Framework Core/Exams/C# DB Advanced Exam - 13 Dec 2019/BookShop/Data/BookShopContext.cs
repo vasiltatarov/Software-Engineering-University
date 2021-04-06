@@ -1,5 +1,4 @@
-﻿using BookShop.Data.Configurations;
-using BookShop.Data.Models;
+﻿using BookShop.Data.Models;
 
 namespace BookShop.Data
 {
@@ -29,7 +28,20 @@ namespace BookShop.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new AuthorBookConfiguration());
+            modelBuilder.Entity<AuthorBook>()
+                .HasKey(x => new {x.AuthorId, x.BookId});
+
+            modelBuilder.Entity<AuthorBook>()
+                .HasOne(x => x.Author)
+                .WithMany(x => x.AuthorsBooks)
+                .HasForeignKey(x => x.AuthorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<AuthorBook>()
+                .HasOne(x => x.Book)
+                .WithMany(x => x.AuthorsBooks)
+                .HasForeignKey(x => x.BookId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
