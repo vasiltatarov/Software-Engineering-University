@@ -2,15 +2,13 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
 using Quiz.Data;
 using Quiz.Services;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Quiz.ConsoleUI
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
@@ -19,8 +17,12 @@ namespace Quiz.ConsoleUI
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
             var jsonImporter = serviceProvider.GetService<IJsonImportService>();
-            jsonImporter.Import("EF-Core-Quiz.json", "EF Core Test v2");
+            //jsonImporter.Import("../../../EfCoreMyExam.json", "EF Core MyExam");
+            //jsonImporter.Import("../../../EF-Core-Quiz.json", "EF Core Test v2");
+            //jsonImporter.Import("../../../ExamPravo.json", "Law Test");
 
+
+            //Test if system work!!!
             //var answerService = serviceProvider.GetService<IAnswerService>();
             //answerService.Add("2", 5, true, 2);
 
@@ -46,7 +48,7 @@ namespace Quiz.ConsoleUI
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
               .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddTransient<IQuizService, QuizSerivce>();
+            services.AddTransient<IQuizService, QuizService>();
             services.AddTransient<IQuestionService, QuestionService>();
             services.AddTransient<IAnswerService, AnswerService>();
             services.AddTransient<IUserAnswerService, UserAnswerService>();
