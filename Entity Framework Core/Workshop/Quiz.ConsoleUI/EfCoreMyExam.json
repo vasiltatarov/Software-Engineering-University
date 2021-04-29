@@ -2,84 +2,183 @@
     {
         "Question": "Which concurrency check is set by default?",
         "Answers": [
-            { "Answer": "Optimistic Concurrency Check", "Correct": true },
-            { "Answer": "Pessimistic Concurrency Check", "Correct": false }
+            {
+                "Answer": "Optimistic Concurrency Check",
+                "Correct": true
+            },
+            {
+                "Answer": "Pessimistic Concurrency Check",
+                "Correct": false
+            }
         ]
     },
     {
         "Question": "Which of the following relationships are not included in the default convention of Entity Framework Core 2.2?",
         "Answers": [
-            { "Answer": "Many-to-Many", "Correct": true },
-            { "Answer": "One-to-Many", "Correct": false },
-            { "Answer": "One-to-One", "Correct": false },
-            { "Answer": "Many-to-One", "Correct": false }
+            {
+                "Answer": "Many-to-Many",
+                "Correct": true
+            },
+            {
+                "Answer": "One-to-Many",
+                "Correct": false
+            },
+            {
+                "Answer": "One-to-One",
+                "Correct": false
+            },
+            {
+                "Answer": "Many-to-One",
+                "Correct": false
+            }
         ]
     },
     {
         "Question": "Which are the types of loading?",
         "Answers": [
-            { "Answer": "Lazy Loading, Eager Loading, Explicit Loading", "Correct": true },
-            { "Answer": "Lazy Loading, Explicit Loading,", "Correct": false },
-            { "Answer": "Lazy Loading, Eager Loading,", "Correct": false },
-            { "Answer": "None of the above", "Correct": false }
+            {
+                "Answer": "Lazy Loading, Eager Loading, Explicit Loading",
+                "Correct": true
+            },
+            {
+                "Answer": "Lazy Loading, Explicit Loading,",
+                "Correct": false
+            },
+            {
+                "Answer": "Lazy Loading, Eager Loading,",
+                "Correct": false
+            },
+            {
+                "Answer": "None of the above",
+                "Correct": false
+            }
         ]
     },
     {
         "Question": "Which of the following class is used as Fluent API in EF Core?",
         "Answers": [
-            { "Answer": "DbSet", "Correct": true },
-            { "Answer": "DbModelBuilder", "Correct": false },
-            { "Answer": "DbContext", "Correct": false },
-            { "Answer": "ModelBuilder", "Correct": false }
+            {
+                "Answer": "DbSet",
+                "Correct": true
+            },
+            {
+                "Answer": "DbModelBuilder",
+                "Correct": false
+            },
+            {
+                "Answer": "DbContext",
+                "Correct": false
+            },
+            {
+                "Answer": "ModelBuilder",
+                "Correct": false
+            }
         ]
     },
     {
         "Question": "What is an ORM?",
         "Answers": [
-            { "Answer": "Object Relational Mapper", "Correct": true },
-            { "Answer": "Object Relative Mapper", "Correct": false },
-            { "Answer": "Object Ratio Mapper", "Correct": false }
+            {
+                "Answer": "Object Relational Mapper",
+                "Correct": true
+            },
+            {
+                "Answer": "Object Relative Mapper",
+                "Correct": false
+            },
+            {
+                "Answer": "Object Ratio Mapper",
+                "Correct": false
+            }
         ]
     },
     {
         "Question": "Can we use other providers except SqlServer?",
         "Answers": [
-            { "Answer": "Yes", "Correct": true },
-            { "Answer": "No", "Correct": false }
+            {
+                "Answer": "Yes",
+                "Correct": true
+            },
+            {
+                "Answer": "No",
+                "Correct": false
+            }
         ]
     },
     {
         "Question": "Which of these is not valid DeleteBehavior enumaration in EF Core?",
         "Answers": [
-            { "Answer": "DeleteBehavior Cascade", "Correct": true },
-            { "Answer": "DeleteBehavior ClientSetNull", "Correct": false },
-            { "Answer": "DeleteBehavior SetNull", "Correct": false },
-            { "Answer": "DeleteBehavior Transit", "Correct": false },
-            { "Answer": "DeleteBehavior Restrict", "Correct": false }
+            {
+                "Answer": "DeleteBehavior Cascade",
+                "Correct": true
+            },
+            {
+                "Answer": "DeleteBehavior ClientSetNull",
+                "Correct": false
+            },
+            {
+                "Answer": "DeleteBehavior SetNull",
+                "Correct": false
+            },
+            {
+                "Answer": "DeleteBehavior Transit",
+                "Correct": false
+            },
+            {
+                "Answer": "DeleteBehavior Restrict",
+                "Correct": false
+            }
         ]
     },
     {
         "Question": "Can we create One-to-One relationship without Fluent API in EF Core?",
         "Answers": [
-            { "Answer": "Yes", "Correct": true },
-            { "Answer": "No", "Correct": false }
+            {
+                "Answer": "Yes",
+                "Correct": true
+            },
+            {
+                "Answer": "No",
+                "Correct": false
+            }
         ]
     },
     {
         "Question": "What is Entity Framework Core?",
         "Answers": [
-            { "Answer": "Object Functional Framework", "Correct": true },
-            { "Answer": "Object Oriented Framework", "Correct": false },
-            { "Answer": "Object Relational Mapper Framework", "Correct": false },
-            { "Answer": "Object Focused Framework", "Correct": false }
+            {
+                "Answer": "Object Functional Framework",
+                "Correct": false
+            },
+            {
+                "Answer": "Object Oriented Framework",
+                "Correct": false
+            },
+            {
+                "Answer": "Object Relational Mapper Framework",
+                "Correct": true
+            },
+            {
+                "Answer": "Object Focused Framework",
+                "Correct": false
+            }
         ]
     },
     {
         "Question": "Which of the following is true?",
         "Answers": [
-            { "Answer": "EF Core is a light weight and extensible framework and open sourced", "Correct": true },
-            { "Answer": "Ef Core is an open sourced framework", "Correct": false },
-            { "Answer": "None of the above", "Correct": false }
+            {
+                "Answer": "EF Core is a light weight and extensible framework and open sourced",
+                "Correct": true
+            },
+            {
+                "Answer": "Ef Core is an open sourced framework",
+                "Correct": false
+            },
+            {
+                "Answer": "None of the above",
+                "Correct": false
+            }
         ]
     }
 ]
