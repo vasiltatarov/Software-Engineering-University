@@ -21,7 +21,6 @@ namespace Quiz.ConsoleUI
             //jsonImporter.Import("../../../EF-Core-Quiz.json", "EF Core Test v2");
             //jsonImporter.Import("../../../ExamPravo.json", "Law Test");
 
-
             //Test if system work!!!
             //var answerService = serviceProvider.GetService<IAnswerService>();
             //answerService.Add("2", 5, true, 2);
