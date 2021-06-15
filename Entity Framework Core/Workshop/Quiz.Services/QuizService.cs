@@ -72,6 +72,7 @@ namespace Quiz.Services
                 var questionsCount = db.UserAnswers
                     .Count(ua => ua.IdentityUser.UserName == userName
                                 && ua.Question.QuizId == quiz.QuizId);
+
                 if (questionsCount == 0)
                 {
                     quiz.Status = QuizStatus.NotStarted;
@@ -82,6 +83,7 @@ namespace Quiz.Services
                     .Count(ua => ua.IdentityUser.UserName == userName
                                 && ua.Question.QuizId == quiz.QuizId
                                 && ua.AnswerId.HasValue);
+
                 if (answeredQuestions == questionsCount)
                 {
                     quiz.Status = QuizStatus.Finished;
