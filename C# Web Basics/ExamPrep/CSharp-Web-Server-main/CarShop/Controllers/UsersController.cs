@@ -1,29 +1,20 @@
 ﻿namespace CarShop.Controllers
 {
     using System.Linq;
-    using CarShop.Data;
-    using CarShop.Data.Models;
     using CarShop.Models.Users;
     using CarShop.Services;
     using MyWebServer.Controllers;
     using MyWebServer.Http;
 
-    using static Data.DataConstants;
-
     public class UsersController : Controller
     {
         private readonly IValidator validator;
-        private readonly IPasswordHasher passwordHasher;
-        private readonly CarShopDbContext data;
+        private readonly IUserService userService;
 
-        public UsersController(
-            IValidator validator, 
-            IPasswordHasher passwordHasher,
-            CarShopDbContext data)
+        public UsersController(IValidator validator, IUserService userService)
         {
             this.validator = validator;
-            this.passwordHasher = passwordHasher;
-            this.data = data;
+            this.userService = userService;
         }
 
         public HttpResponse Register() => View();
@@ -32,33 +23,12 @@
         public HttpResponse Register(RegisterUserFormModel model)
         {
             var modelErrors = this.validator.ValidateUser(model);
-
-            if (this.data.Users.Any(u => u.Username == model.Username))
-            {
-                modelErrors.Add($"User with '{model.Username}' username already exists.");
-            }
-
-            if (this.data.Users.Any(u => u.Email == model.Email))
-            {
-                modelErrors.Add($"User with '{model.Email}' e-mail already exists.");
-            }
-
             if (modelErrors.Any())
             {
                 return Error(modelErrors);
             }
 
-            var user = new User
-            {
-                Username = model.Username,
-                Password = this.passwordHasher.HashPassword(model.Password),
-                Email = model.Email,
-                IsMechanic = model.UserType == UserTypeMechanic
-            };
-
-            data.Users.Add(user);
-
-            data.SaveChanges();
+            this.userService.Create(model.Username, model.Email, model.Password, model.UserType);
 
             return Redirect("/Users/Login");
         }
@@ -68,14 +38,7 @@
         [HttpPost]
         public HttpResponse Login(LoginUserFormModel model)
         {
-            var hashedPassword = this.passwordHasher.HashPassword(model.Password);
-
-            var userId = this.data
-                .Users
-                .Where(u => u.Username == model.Username && u.Password == hashedPassword)
-                .Select(u => u.Id)
-                .FirstOrDefault();
-
+            var userId = this.userService.GetUserId(model.Username, model.Password);
             if (userId == null)
             {
                 return Error("Username and password combination is not valid.");

@@ -6,13 +6,8 @@
     public class HomeController : Controller
     {
         public HttpResponse Index()
-        {
-            if (this.User.IsAuthenticated)
-            {
-                return Redirect("/Cars/All");
-            }
-
-            return View();
-        }
+            => this.User.IsAuthenticated
+                ? this.Redirect("/Cars/All")
+                : this.View();
     }
 }

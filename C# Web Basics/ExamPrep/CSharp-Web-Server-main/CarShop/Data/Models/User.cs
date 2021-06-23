@@ -1,4 +1,6 @@
-﻿namespace CarShop.Data.Models
+﻿using System.Collections.Generic;
+
+namespace CarShop.Data.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;
@@ -23,5 +25,7 @@
         public string Password { get; set; }
 
         public bool IsMechanic { get; set; }
+
+        public ICollection<Car> Cars { get; set; }
     }
 }

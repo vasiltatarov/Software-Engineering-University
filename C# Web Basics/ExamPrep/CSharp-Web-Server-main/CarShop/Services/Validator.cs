@@ -1,4 +1,6 @@
-﻿namespace CarShop.Services
+﻿using CarShop.Models.Issues;
+
+namespace CarShop.Services
 {
     using CarShop.Models.Cars;
     using CarShop.Models.Users;
@@ -10,9 +12,23 @@
 
     public class Validator : IValidator
     {
+        private readonly IUserService userService;
+
+        public Validator(IUserService userService) => this.userService = userService;
+
         public ICollection<string> ValidateUser(RegisterUserFormModel model)
         {
             var errors = new List<string>();
+
+            if (this.userService.IsUsernameExist(model.Username))
+            {
+                errors.Add($"User with '{model.Username}' username already exists.");
+            }
+
+            if (this.userService.IsEmailExist(model.Email))
+            {
+                errors.Add($"User with '{model.Email}' e-mail already exists.");
+            }
 
             if (model.Username.Length < UserMinUsername || model.Username.Length > DefaultMaxLength)
             {
@@ -64,6 +80,23 @@
             if (!Regex.IsMatch(model.PlateNumber, CarPlateNumberRegularExpression))
             {
                 errors.Add($"Plate number {model.PlateNumber} is not valid. It should be in format 'AA0000AA'.");
+            }
+
+            return errors;
+        }
+
+        public ICollection<string> ValidateIssue(AddIssueFormModel model)
+        {
+            var errors = new List<string>();
+
+            if (model.CarId == null)
+            {
+                errors.Add($"Car ID cannot be empty.");
+            }
+
+            if (model.Description.Length < IssueMinDescription)
+            {
+                errors.Add($"Description '{model.Description}' is not valid. It must have more than {IssueMinDescription} characters.");
             }
 
             return errors;

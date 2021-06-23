@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CarShop.Data.Migrations
+namespace CarShop.Migrations
 {
-    public partial class UserCarIssueTables : Migration
+    public partial class Tables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,7 +40,7 @@ namespace CarShop.Data.Migrations
                         column: x => x.OwnerId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,7 +60,7 @@ namespace CarShop.Data.Migrations
                         column: x => x.CarId,
                         principalTable: "Cars",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

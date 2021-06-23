@@ -3,16 +3,14 @@ using CarShop.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CarShop.Data.Migrations
+namespace CarShop.Migrations
 {
     [DbContext(typeof(CarShopDbContext))]
-    [Migration("20210617182043_UserCarIssueTables")]
-    partial class UserCarIssueTables
+    partial class CarShopDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,9 +106,9 @@ namespace CarShop.Data.Migrations
             modelBuilder.Entity("CarShop.Data.Models.Car", b =>
                 {
                     b.HasOne("CarShop.Data.Models.User", "Owner")
-                        .WithMany()
+                        .WithMany("Cars")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Owner");
@@ -121,7 +119,7 @@ namespace CarShop.Data.Migrations
                     b.HasOne("CarShop.Data.Models.Car", "Car")
                         .WithMany("Issues")
                         .HasForeignKey("CarId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Car");
@@ -130,6 +128,11 @@ namespace CarShop.Data.Migrations
             modelBuilder.Entity("CarShop.Data.Models.Car", b =>
                 {
                     b.Navigation("Issues");
+                });
+
+            modelBuilder.Entity("CarShop.Data.Models.User", b =>
+                {
+                    b.Navigation("Cars");
                 });
 #pragma warning restore 612, 618
         }

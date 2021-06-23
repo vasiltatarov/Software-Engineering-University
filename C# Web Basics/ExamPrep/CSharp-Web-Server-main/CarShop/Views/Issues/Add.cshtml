@@ -7,8 +7,8 @@
         </div>
         <textarea row="20" class="form-control" id="description" name="description"></textarea>
     </div>
-    <input type="text" hidden id="id" name="carId" value="@Model" />
+    <input type="text" hidden id="id" name="carId" value="@Model.CarId" />
     <div class="d-flex justify-content-center">
-        <button type="submit" href="/Issues/Add" class="btn btn-block btn-primary text-white mb-3">Add</button>
+        <button type="submit" href="/Issues/Add?carId=@Model.CarId" class="btn btn-block btn-primary text-white mb-3">Add</button>
     </div>
 </form>

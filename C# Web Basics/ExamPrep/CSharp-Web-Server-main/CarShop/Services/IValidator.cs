@@ -1,4 +1,6 @@
-﻿namespace CarShop.Services
+﻿using CarShop.Models.Issues;
+
+namespace CarShop.Services
 {
     using CarShop.Models.Cars;
     using CarShop.Models.Users;
@@ -9,5 +11,7 @@
         ICollection<string> ValidateUser(RegisterUserFormModel model);
 
         ICollection<string> ValidateCar(AddCarFormModel model);
+
+        ICollection<string> ValidateIssue(AddIssueFormModel model);
     }
 }

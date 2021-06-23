@@ -1,60 +1,117 @@
-﻿namespace CarShop.Controllers
+﻿using System.Linq;
+using CarShop.Models.Issues;
+
+namespace CarShop.Controllers
 {
-    using CarShop.Data;
-    using CarShop.Models.Issues;
     using CarShop.Services;
     using MyWebServer.Controllers;
     using MyWebServer.Http;
-    using System.Linq;
 
     public class IssuesController : Controller
     {
         private readonly IUserService userService;
-        private readonly CarShopDbContext data;
+        private readonly IIssueService issueService;
+        private readonly ICarService carService;
+        private readonly IValidator validator;
 
-        public IssuesController(IUserService userService, CarShopDbContext data)
+        public IssuesController(IUserService userService, IIssueService issueService, ICarService carService, IValidator validator)
         {
             this.userService = userService;
-            this.data = data;
+            this.issueService = issueService;
+            this.carService = carService;
+            this.validator = validator;
         }
 
         [Authorize]
         public HttpResponse CarIssues(string carId)
         {
-            if (!this.userService.IsMechanic(this.User.Id))
-            {
-                var userOwnsCar = this.data.Cars
-                    .Any(c => c.Id == carId && c.OwnerId == this.User.Id);
+            var userId = this.User.Id;
 
-                if (!userOwnsCar)
+            if (!this.userService.IsMechanic(userId))
+            {
+                if (!this.carService.IsUserOwnsCar(carId, userId))
                 {
                     return Error("You do not have access to this car.");
                 }
             }
 
-            var carWithIssues = this.data
-                .Cars
-                .Where(c => c.Id == carId)
-                .Select(c => new CarIssuesViewModel
-                {
-                    Id = c.Id,
-                    Model = c.Model,
-                    Year = c.Year,
-                    Issues = c.Issues.Select(i => new IssueListingViewModel
-                    {
-                        Id = i.Id,
-                        Description = i.Description,
-                        IsFixed = i.IsFixed
-                    })
-                })
-                .FirstOrDefault();
-
+            var carWithIssues = this.issueService.CarIssues(carId);
             if (carWithIssues == null)
             {
                 return Error($"Car with ID '{carId}' does not exist.");
             }
 
             return View(carWithIssues);
+        }
+
+        [Authorize]
+        public HttpResponse Add(string carId)
+            => View(new AddIssueViewModel
+        {
+            CarId = carId
+        });
+
+        [Authorize]
+        [HttpPost]
+        public HttpResponse Add(AddIssueFormModel model)
+        {
+            if (!this.UserCanAccessCar(model.CarId))
+            {
+                return Unauthorized();
+            }
+
+            var modelErrors = this.validator.ValidateIssue(model);
+            if (modelErrors.Any())
+            {
+                return Error(modelErrors);
+            }
+
+            this.issueService.Add(model.Description, model.CarId);
+
+            return Redirect($"/Issues/CarIssues?carId={model.CarId}");
+        }
+
+        [Authorize]
+        public HttpResponse Fix(string issueId, string carId)
+        {
+            if (!this.userService.IsMechanic(this.User.Id))
+            {
+                return Unauthorized();
+            }
+
+            this.issueService.Fix(issueId);
+
+            return Redirect($"/Issues/CarIssues?carId={carId}");
+        }
+
+        [Authorize]
+        public HttpResponse Delete(string issueId, string carId)
+        {
+            if (!this.UserCanAccessCar(carId))
+            {
+                return Unauthorized();
+            }
+
+            this.issueService.Delete(issueId);
+
+            return Redirect($"/Issues/CarIssues?carId={carId}");
+        }
+
+        private bool UserCanAccessCar(string carId)
+        {
+            var userIsMechanic = this.userService.IsMechanic(this.User.Id);
+
+            if (!userIsMechanic)
+            {
+                var userOwnsCar = this.carService.IsUserOwnsCar(carId, this.User.Id);
+
+                if (!userOwnsCar)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }
