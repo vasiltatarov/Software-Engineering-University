@@ -19,14 +19,14 @@ namespace Git.Services
         {
             var errors = new List<string>();
 
+            if (string.IsNullOrWhiteSpace(model.Username) || model.Username.Length < UserMinUsername || model.Username.Length > DefaultMaxLength)
+            {
+                errors.Add($"Username '{model.Username}' is not valid. It must be between {UserMinUsername} and {DefaultMaxLength} characters long.");
+            }
+
             if (this.userService.IsUsernameExist(model.Username))
             {
                 errors.Add($"Username '{model.Username}' is already exist.");
-            }
-
-            if (model.Username.Length < UserMinUsername || model.Username.Length > DefaultMaxLength)
-            {
-                errors.Add($"Username '{model.Username}' is not valid. It must be between {UserMinUsername} and {DefaultMaxLength} characters long.");
             }
 
             if (!Regex.IsMatch(model.Email, UserEmailRegularExpression))
@@ -34,7 +34,7 @@ namespace Git.Services
                 errors.Add($"Email {model.Email} is not a valid e-mail address.");
             }
 
-            if (model.Password.Length < UserMinPassword || model.Password.Length > DefaultMaxLength)
+            if (string.IsNullOrWhiteSpace(model.Password) || model.Password.Length < UserMinPassword || model.Password.Length > DefaultMaxLength)
             {
                 errors.Add($"The provided password is not valid. It must be between {UserMinPassword} and {DefaultMaxLength} characters long.");
             }
