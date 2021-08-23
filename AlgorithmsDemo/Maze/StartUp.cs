@@ -6,10 +6,10 @@ namespace Maze
     {
         public static void Main()
         {
-            var maze = new string[]
+            string[] maze = new string[]
             {
-                " |   |     |       |   |  ",
-                " | | | |   |   |      |E  ",
+                " |   |             |   | E",
+                " | | | |   |   |      |   ",
                 " | |   |    |  |   |   |  ",
                 "   | | |       | | |      "
             };

@@ -6,13 +6,11 @@ namespace Maze
 {
     public class Maze
     {
-        private static readonly List<string> bestPaths = new List<string>();
-
         public static string GetPathInMaze(string[] maze)
         {
             FindAllPaths(maze, 0, 0, new bool[maze.Length, maze[0].Length], "");
 
-            var bestPath = FindBestPath();
+            string bestPath = FindBestPath();
 
             if (bestPath == null)
             {
@@ -122,6 +120,8 @@ namespace Maze
                 .AppendLine("Start at - 'S'")
                 .AppendLine("End at - 'E'");
         }
+
+        private static List<string> bestPaths = new List<string>();
 
         private static void FindAllPaths(string[] maze, int row, int col, bool[,] visited, string path)
         {
