@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TheRecrutmentTool.Data\TheRecrutmentTool.Data.csproj" />
+    <ProjectReference Include="..\TheRecrutmentTool.ViewModels\TheRecrutmentTool.ViewModels.csproj" />
+  </ItemGroup>
+
+</Project>
