@@ -128,5 +128,93 @@ namespace PowerList.Test
             // Assert
             Assert.False(isExist);
         }
+
+        [Fact]
+        public void IndexOfShouldReturnMinusZeroWhenItemNotExist()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+            powerList.Add(23);
+
+            // Act
+            var index = powerList.IndexOf(55);
+
+            // Assert
+            Assert.Equal(-1, index);
+        }
+
+        [Fact]
+        public void IndexOfShouldReturnCorrectIndexWhenItemExist()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+            powerList.Add(23);
+            powerList.Add(12);
+
+            // Act
+            var index = powerList.IndexOf(12);
+
+            // Assert
+            Assert.Equal(1, index);
+        }
+
+        [Fact]
+        public void RemoveShouldReturnFalseWhenItemNotExist()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+
+            // Act
+            var isRemoved = powerList.Remove(12);
+
+            // Assert
+            Assert.False(isRemoved);
+        }
+
+        [Fact]
+        public void RemoveShouldReturnTrueWhenItemExistAndAlsoShouldReduceCount()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+            powerList.Add(12);
+            powerList.Add(23);
+
+            // Act
+            var isRemoved = powerList.Remove(23);
+
+            // Assert
+            Assert.True(isRemoved);
+            Assert.Equal(1, powerList.Count);
+        }
+
+        [Theory]
+        [InlineData(0)]
+        [InlineData(1)]
+        [InlineData(99)]
+        public void RemoveAtShouldThrowExceptionWhenIndexIsInvalid(int index)
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+
+            // Act
+
+            // Assert
+            Assert.Throws<IndexOutOfRangeException>(() => powerList.RemoveAt(index));
+        }
+
+        [Fact]
+        public void RemoveAtShouldRemoveItemOfTheGivenIndexSuccessfully()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+            powerList.Add(12);
+            powerList.Add(23);
+
+            // Act
+            powerList.RemoveAt(1);
+
+            // Assert
+            Assert.Equal(1, powerList.Count);
+        }
     }
 }
