@@ -26,8 +26,18 @@ namespace PowerList
 
         public T this[int index]
         {
-            get => this.items[index];
-            set => this.items[index] = value;
+            get
+            {
+                ValidateIndex(index);
+
+                return this.items[index];
+            }
+            set
+            {
+                ValidateIndex(index);
+
+                this.items[index] = value;
+            }
         }
 
         public void Add(T item)

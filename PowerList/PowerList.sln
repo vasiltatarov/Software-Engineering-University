@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerList", "PowerList\Powe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerList.ConsoleApp", "PowerList.ConsoleApp\PowerList.ConsoleApp.csproj", "{21CAA5F4-8B0F-4914-90EC-E0DDB31DFD91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PowerList.Test", "PowerList.Test\PowerList.Test.csproj", "{3C91EFB9-EAE6-4855-83F9-284591B9E59A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{21CAA5F4-8B0F-4914-90EC-E0DDB31DFD91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21CAA5F4-8B0F-4914-90EC-E0DDB31DFD91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21CAA5F4-8B0F-4914-90EC-E0DDB31DFD91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C91EFB9-EAE6-4855-83F9-284591B9E59A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C91EFB9-EAE6-4855-83F9-284591B9E59A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C91EFB9-EAE6-4855-83F9-284591B9E59A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C91EFB9-EAE6-4855-83F9-284591B9E59A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
