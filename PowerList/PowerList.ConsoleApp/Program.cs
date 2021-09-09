@@ -19,16 +19,27 @@ namespace PowerList.ConsoleApp
                 list.Add(i);
             }
 
+            list.Add(999);
+
             Console.WriteLine("Count " + list.Count);
+            Console.WriteLine(list.Contains(1));
+            Console.WriteLine(list.Contains(1111));
+            Console.WriteLine("IndexOf " + list.IndexOf(999));
 
-            //var listAsEnumerable = GetListAsEnumerable();
+            list[1] = 555;
+            Console.WriteLine(list[1]);
 
+            list.RemoveAt(1);
+            Console.WriteLine(list[1]);
+
+            Console.WriteLine(list.Remove(999));
+            Console.WriteLine(list.Count);
+
+            Console.WriteLine();
             foreach (var i in list)
             {
                 Console.WriteLine(i);
             }
-
-
 
             // Power List
             Console.WriteLine("\nPower List\n");
@@ -40,10 +51,23 @@ namespace PowerList.ConsoleApp
                 powerList.Add(i);
             }
 
-            Console.WriteLine("Count " + list.Count);
+            powerList.Add(999);
 
-            //var powerListAsEnumerable = GetPowerListAsEnumerable();
+            Console.WriteLine("Count " + powerList.Count);
+            Console.WriteLine(powerList.Contains(1));
+            Console.WriteLine(powerList.Contains(1111));
+            Console.WriteLine("IndexOf " + powerList.IndexOf(999));
 
+            powerList[1] = 555;
+            Console.WriteLine(powerList[1]);
+
+            powerList.RemoveAt(1);
+            Console.WriteLine(powerList[1]);
+
+            Console.WriteLine(powerList.Remove(999));
+            Console.WriteLine(powerList.Count);
+
+            Console.WriteLine();
             foreach (var i in powerList)
             {
                 Console.WriteLine(i);

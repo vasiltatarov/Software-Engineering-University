@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace PowerList
@@ -16,12 +17,18 @@ namespace PowerList
 
         public PowerList(int capacity)
         {
-            //ValidateCapacity(capacity);
+            ValidateCapacity(capacity);
 
             this.items = new T[capacity];
         }
 
         public int Count { get; private set; }
+
+        public T this[int index]
+        {
+            get => this.items[index];
+            set => this.items[index] = value;
+        }
 
         public void Add(T item)
         {
@@ -32,6 +39,58 @@ namespace PowerList
 
             this.items[this.Count] = item;
             this.Count++;
+        }
+
+        public bool Contains(T item)
+        {
+            for (int i = 0; i < this.Count; i++)
+            {
+                if (this.items[i].Equals(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public int IndexOf(T item)
+        {
+            for (int i = 0; i < this.Count; i++)
+            {
+                if (this.items[i].Equals(item))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public bool Remove(T item)
+        {
+            var index = this.IndexOf(item);
+
+            if (index >= 0)
+            {
+                this.RemoveAt(index);
+                return true;
+            }
+
+            return false;
+        }
+
+        public void RemoveAt(int index)
+        {
+            ValidateIndex(index);
+
+            for (int i = index; i < this.Count - 1; i++)
+            {
+                this.items[i] = this.items[i + 1];
+            }
+
+            this.items[this.Count - 1] = default;
+            this.Count--;
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -55,6 +114,23 @@ namespace PowerList
             }
 
             this.items = newArr;
+        }
+
+        private void ValidateCapacity(int capacity)
+        {
+            if (capacity <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(capacity));
+            }
+        }
+
+
+        private void ValidateIndex(int index)
+        {
+            if (index < 0 || index >= this.Count)
+            {
+                throw new IndexOutOfRangeException();
+            }
         }
     }
 }
