@@ -103,6 +103,18 @@ namespace PowerList
             this.Count = 0;
         }
 
+        public void Reverse()
+        {
+            var reverseArray = new T[this.Count];
+
+            for (int i = 0; i < this.Count; i++)
+            {
+                reverseArray[i] = this.items[this.Count - i - 1];
+            }
+
+            this.items = reverseArray;
+        }
+
         public bool Contains(T item)
         {
             for (int i = 0; i < this.Count; i++)

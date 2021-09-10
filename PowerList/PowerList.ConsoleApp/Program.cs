@@ -95,6 +95,9 @@ namespace PowerList.ConsoleApp
             powerList.Sort();
             Console.WriteLine(string.Join(", ", powerList));
 
+            powerList.Reverse();
+            Console.WriteLine(string.Join(", ", powerList));
+
             //powerList.Clear();
             //Console.WriteLine("Count " + powerList.Count);
 

@@ -19,6 +19,8 @@ namespace PowerList
 
         void Clear();
 
+        void Reverse();
+
         bool Contains(T item);
 
         bool Remove(T item);
