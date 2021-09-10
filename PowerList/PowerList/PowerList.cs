@@ -97,6 +97,12 @@ namespace PowerList
             this.Count++;
         }
 
+        public void Clear()
+        {
+            this.items = new T[DefaultSize];
+            this.Count = 0;
+        }
+
         public bool Contains(T item)
         {
             for (int i = 0; i < this.Count; i++)
@@ -121,6 +127,35 @@ namespace PowerList
             }
 
             return -1;
+        }
+
+        public void Sort()
+            => this.Sort(null);
+
+        public void Sort(Comparison<T> comparison)
+        {
+            if (this.Count <= 1)
+            {
+                return;
+            }
+
+            var enumerable = new List<T>();
+
+            for (int i = 0; i < this.Count; i++)
+            {
+                enumerable.Add(this.items[i]);
+            }
+
+            if (comparison != null)
+            {
+                enumerable.Sort(comparison);
+            }
+            else
+            {
+                enumerable.Sort();
+            }
+
+            this.items = enumerable.ToArray();
         }
 
         public bool Remove(T item)

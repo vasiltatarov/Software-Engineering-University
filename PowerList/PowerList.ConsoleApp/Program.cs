@@ -89,10 +89,39 @@ namespace PowerList.ConsoleApp
             Console.WriteLine("Count " + powerList.Count);
 
             powerList.AddRange(new List<int> { 1, 2, 3, });
+            Console.WriteLine(string.Join(", ", powerList));
+            Console.WriteLine("Count " + powerList.Count);
 
+            powerList.Sort();
             Console.WriteLine(string.Join(", ", powerList));
 
-            Console.WriteLine("Count " + powerList.Count);
+            //powerList.Clear();
+            //Console.WriteLine("Count " + powerList.Count);
+
+            //var test = new PowerList<string>();
+            //test.Add("vasko");
+            //test.Add("wasko");
+            //test.Add("asan");
+            //test.Add("ahmed");
+            //test.Add("aaa");
+
+            //test.Sort();
+
+            //Console.WriteLine(string.Join(", ", test));
+
+            //var list1 = new PowerList<Person>
+            //{
+            //    new Person {Age = 12, Name = "test"},
+            //    new Person {Age = 234, Name = "test1"},
+            //    new Person {Age = 1, Name = "test2"},
+            //};
+
+            //list1.Sort((a, b) => a.Age.CompareTo(b.Age));
+
+            //foreach (var person in list1)
+            //{
+            //    Console.WriteLine($"{person.Name} - {person.Age}");
+            //}
         }
 
         private static IEnumerable<int> GetListAsEnumerable()
@@ -106,5 +135,12 @@ namespace PowerList.ConsoleApp
 
             return powerList;
         }
+    }
+
+    public class Person
+    {
+        public string Name { get; set; }
+
+        public int Age { get; set; }
     }
 }

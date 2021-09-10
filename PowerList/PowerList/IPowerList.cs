@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace PowerList
 {
@@ -16,6 +17,8 @@ namespace PowerList
 
         void Insert(int index, T item);
 
+        void Clear();
+
         bool Contains(T item);
 
         bool Remove(T item);
@@ -27,5 +30,9 @@ namespace PowerList
         void RemoveAt(int index);
 
         int IndexOf(T item);
+
+        void Sort();
+
+        void Sort(Comparison<T> comparison);
     }
 }
