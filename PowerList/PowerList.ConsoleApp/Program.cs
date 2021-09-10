@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace PowerList.ConsoleApp
 {
@@ -35,11 +36,14 @@ namespace PowerList.ConsoleApp
             Console.WriteLine(list.Remove(999));
             Console.WriteLine(list.Count);
 
+            list.Insert(2, 434);
+            Console.WriteLine("Count " + list.Count);
+
             Console.WriteLine();
-            foreach (var i in list)
-            {
-                Console.WriteLine(i);
-            }
+            Console.WriteLine(string.Join(", ", list));
+
+            var evenNumbers = list.Where(x => x % 2 == 0).ToList();
+            Console.WriteLine(string.Join(", ", evenNumbers));
 
             // Power List
             Console.WriteLine("\nPower List\n");
@@ -67,11 +71,21 @@ namespace PowerList.ConsoleApp
             Console.WriteLine(powerList.Remove(999));
             Console.WriteLine(powerList.Count);
 
+            powerList.Insert(2, 434);
+            Console.WriteLine("Count " + powerList.Count);
+
+            powerList.AddAtBottom(123);
+            Console.WriteLine("Count " + powerList.Count);
+
+            Console.WriteLine(powerList.RemoveFirst());
+            Console.WriteLine("Count " + powerList.Count);
+
             Console.WriteLine();
-            foreach (var i in powerList)
-            {
-                Console.WriteLine(i);
-            }
+            Console.WriteLine(string.Join(", ", powerList));
+
+            var evenNumbersPowerList = powerList
+                .Where(x => x % 2 == 0);
+            Console.WriteLine(string.Join(", ", evenNumbersPowerList));
         }
 
         private static IEnumerable<int> GetListAsEnumerable()

@@ -10,12 +10,22 @@ namespace PowerList
 
         void Add(T item);
 
-        bool Contains(T item);
+        void AddAtBottom(T item);
 
-        int IndexOf(T item);
+        void Insert(int index, T item);
+
+        bool Contains(T item);
 
         bool Remove(T item);
 
+        T RemoveFirst();
+
+        T RemoveLast();
+
         void RemoveAt(int index);
+
+        int IndexOf(T item);
+
+        PowerList<T> ToPowerList();
     }
 }

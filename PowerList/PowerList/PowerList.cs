@@ -40,14 +40,45 @@ namespace PowerList
             }
         }
 
+        /// <summary>
+        /// Adds an item to the end of the PowerList.
+        /// </summary>
         public void Add(T item)
         {
-            if (this.Count == this.items.Length)
-            {
-                Resize();
-            }
+            Resize();
 
             this.items[this.Count] = item;
+            this.Count++;
+        }
+
+        /// <summary>
+        /// Adds an item to the bottom of the PowerList.
+        /// </summary>
+        public void AddAtBottom(T item)
+        {
+            Resize();
+
+            for (int i = this.Count; i > 0; i--)
+            {
+                this.items[i] = this.items[i - 1];
+            }
+
+            this.items[0] = item;
+            this.Count++;
+        }
+
+        public void Insert(int index, T item)
+        {
+            ValidateIndex(index);
+
+            Resize();
+
+            for (int i = this.Count; i > index; i--)
+            {
+                this.items[i] = this.items[i - 1];
+            }
+
+            this.items[index] = item;
             this.Count++;
         }
 
@@ -90,6 +121,37 @@ namespace PowerList
             return false;
         }
 
+        /// <summary>
+        /// Remove first item of the PowerList.
+        /// If there is such no item at the index 0 throws ArgumentOutOfRangeException.
+        /// </summary>
+        /// <returns>Item at the index 0. If such exist.</returns>
+        public T RemoveFirst()
+        {
+            CheckIfEmpty();
+
+            var itemToRemove = this.items[0];
+            this.RemoveAt(0);
+
+            return itemToRemove;
+        }
+
+        /// <summary>
+        /// Remove last item of the PowerList.
+        /// If there is such no item at the last index throws ArgumentOutOfRangeException.
+        /// </summary>
+        /// <returns>Item at the last index. If such exist.</returns>
+        public T RemoveLast()
+        {
+            CheckIfEmpty();
+
+            var itemToRemove = this.items[this.Count - 1];
+            this.items[this.Count - 1] = default;
+            this.Count--;
+
+            return itemToRemove;
+        }
+
         public void RemoveAt(int index)
         {
             ValidateIndex(index);
@@ -116,14 +178,17 @@ namespace PowerList
 
         private void Resize()
         {
-            var newArr = new T[this.items.Length * 2];
-
-            for (int i = 0; i < this.Count; i++)
+            if (this.Count == this.items.Length)
             {
-                newArr[i] = this.items[i];
-            }
+                var newArr = new T[this.items.Length * 2];
 
-            this.items = newArr;
+                for (int i = 0; i < this.Count; i++)
+                {
+                    newArr[i] = this.items[i];
+                }
+
+                this.items = newArr;
+            }
         }
 
         private void ValidateCapacity(int capacity)
@@ -134,12 +199,19 @@ namespace PowerList
             }
         }
 
-
         private void ValidateIndex(int index)
         {
             if (index < 0 || index >= this.Count)
             {
                 throw new IndexOutOfRangeException();
+            }
+        }
+
+        private void CheckIfEmpty()
+        {
+            if (this.Count == 0)
+            {
+                throw new ArgumentOutOfRangeException();
             }
         }
     }
