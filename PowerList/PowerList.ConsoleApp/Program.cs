@@ -83,9 +83,16 @@ namespace PowerList.ConsoleApp
             Console.WriteLine();
             Console.WriteLine(string.Join(", ", powerList));
 
-            var evenNumbersPowerList = powerList
-                .Where(x => x % 2 == 0);
-            Console.WriteLine(string.Join(", ", evenNumbersPowerList));
+            powerList = new PowerList<int>(powerList.Where(x => x % 2 == 0));
+            Console.WriteLine(string.Join(", ", powerList));
+
+            Console.WriteLine("Count " + powerList.Count);
+
+            powerList.AddRange(new List<int> { 1, 2, 3, });
+
+            Console.WriteLine(string.Join(", ", powerList));
+
+            Console.WriteLine("Count " + powerList.Count);
         }
 
         private static IEnumerable<int> GetListAsEnumerable()
@@ -95,7 +102,7 @@ namespace PowerList.ConsoleApp
 
         private static IEnumerable<int> GetPowerListAsEnumerable()
         {
-            var powerList = new PowerList<int> {1, 2};
+            var powerList = new PowerList<int> { 1, 2 };
 
             return powerList;
         }

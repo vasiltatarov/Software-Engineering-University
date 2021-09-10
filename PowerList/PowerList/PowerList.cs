@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PowerList
 {
@@ -13,6 +14,12 @@ namespace PowerList
         public PowerList()
             : this(DefaultSize)
         {
+        }
+
+        public PowerList(IEnumerable<T> enumerable)
+        {
+            this.items = enumerable.ToArray();
+            this.Count = enumerable.Count();
         }
 
         public PowerList(int capacity)
@@ -65,6 +72,14 @@ namespace PowerList
 
             this.items[0] = item;
             this.Count++;
+        }
+
+        public void AddRange(IEnumerable<T> enumerable)
+        {
+            foreach (var item in enumerable)
+            {
+                this.Add(item);
+            }
         }
 
         public void Insert(int index, T item)

@@ -12,6 +12,8 @@ namespace PowerList
 
         void AddAtBottom(T item);
 
+        void AddRange(IEnumerable<T> enumerable);
+
         void Insert(int index, T item);
 
         bool Contains(T item);
@@ -25,7 +27,5 @@ namespace PowerList
         void RemoveAt(int index);
 
         int IndexOf(T item);
-
-        PowerList<T> ToPowerList();
     }
 }
