@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace PowerList
+﻿namespace PowerList
 {
+    using System;
+    using System.Collections.Generic;
+
     public interface IPowerList<T> : IEnumerable<T>
     {
         int Count { get; }

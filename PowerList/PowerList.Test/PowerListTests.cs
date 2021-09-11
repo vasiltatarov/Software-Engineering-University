@@ -1,8 +1,9 @@
-using System;
-
 namespace PowerList.Test
 {
+    using System;
+    using System.Collections.Generic;
     using Xunit;
+    using Models;
 
     public class PowerListTests
     {
@@ -215,6 +216,255 @@ namespace PowerList.Test
 
             // Assert
             Assert.Equal(1, powerList.Count);
+        }
+
+        [Fact]
+        public void AddAtBottomShouldAddNewItemAtTheBottomOfTheCollection()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+
+            // Act
+            powerList.AddAtBottom(2);
+            powerList.AddAtBottom(34);
+
+            // Assert
+            Assert.Equal(2, powerList.Count);
+            Assert.Equal(34, powerList[0]);
+        }
+
+        [Fact]
+        public void AddRangeShouldAddRangeOfItemsAtTheCollection()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+
+            // Act
+            powerList.AddRange(new List<int> { 1, 2, 3, 4 });
+
+            // Assert
+            Assert.Equal(4, powerList.Count);
+        }
+
+        [Fact]
+        public void InsertShouldAddItemAtTheGivenIndex()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+
+            // Act
+            powerList.Add(123);
+            powerList.Insert(0, 12);
+
+            // Assert
+            Assert.Equal(2, powerList.Count);
+            Assert.Equal(12, powerList[0]);
+        }
+
+        [Fact]
+        public void InsertShouldThrowExceptionWhenIndexIsInvalid()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+
+            // Act
+
+            // Assert
+            Assert.Throws<IndexOutOfRangeException>(() => powerList.Insert(1, 12));
+        }
+
+        [Fact]
+        public void ClearShouldRemoveAllItemInTheCollectionAndShouldHaveCountZero()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+            powerList.Add(23);
+
+            // Act
+            powerList.Clear();
+
+            // Assert
+            Assert.Empty(powerList);
+            Assert.Equal(0, powerList.Count);
+        }
+
+        [Fact]
+        public void ReverseShouldReverseAllItemsInTheCollection()
+        {
+            // Arrange
+            var powerList = new PowerList<int> { 1, 2, 3, 4, 5 };
+
+            // Act
+            powerList.Reverse();
+
+            // Assert
+            Assert.Equal(1, powerList[4]);
+            Assert.Equal(5, powerList[0]);
+            Assert.Equal(5, powerList.Count);
+        }
+
+        [Fact]
+        public void ReverseShouldDoNothingWhenCollectionHaveOneItem()
+        {
+            // Arrange
+            var powerList = new PowerList<int> { 1 };
+
+            // Act
+            powerList.Reverse();
+
+            // Assert
+            Assert.Equal(1, powerList[0]);
+            Assert.Equal(1, powerList.Count);
+        }
+
+        [Fact]
+        public void RemoveFirstShouldRemoveItemAtTheFirstIndexAndShouldReturnIt()
+        {
+            // Arrange
+            var powerList = new PowerList<int> { 1, 2, 3 };
+
+            // Act
+            var removedItem = powerList.RemoveFirst();
+
+            // Assert
+            Assert.Equal(2, powerList[0]);
+            Assert.Equal(1, removedItem);
+            Assert.Equal(2, powerList.Count);
+        }
+
+        [Fact]
+        public void RemoveFirstShouldThrowExceptionWhenCollectionIsEmpty()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+
+            // Act
+
+            // Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => powerList.RemoveFirst());
+        }
+
+        [Fact]
+        public void RemoveLastShouldRemoveItemAtTheLastIndexAndShouldReturnIt()
+        {
+            // Arrange
+            var powerList = new PowerList<int> { 1, 2, 3 };
+
+            // Act
+            var removedItem = powerList.RemoveLast();
+
+            // Assert
+            Assert.Equal(1, powerList[0]);
+            Assert.Equal(3, removedItem);
+            Assert.Equal(2, powerList.Count);
+        }
+
+        [Fact]
+        public void RemoveLastShouldThrowExceptionWhenCollectionIsEmpty()
+        {
+            // Arrange
+            var powerList = new PowerList<int>();
+
+            // Act
+
+            // Assert
+            Assert.Throws<ArgumentOutOfRangeException>(() => powerList.RemoveLast());
+        }
+
+        [Fact]
+        public void SortShouldSortAllItemsInTheCollectionWithoutComparison()
+        {
+            // Arrange
+            var powerList = new PowerList<int> { 2, 5, 1 };
+
+            // Act
+            powerList.Sort();
+
+            // Assert
+            Assert.Equal(3, powerList.Count);
+            Assert.Equal(1, powerList[0]);
+            Assert.Equal(2, powerList[1]);
+            Assert.Equal(5, powerList[2]);
+        }
+
+        [Fact]
+        public void SortShouldReturnMethodWhenCollectionHaveOneOrLessThanOneItems()
+        {
+            // Arrange
+            var powerList = new PowerList<int> { 2 };
+
+            // Act
+            powerList.Sort();
+
+            // Assert
+            Assert.Equal(1, powerList.Count);
+            Assert.Equal(2, powerList[0]);
+        }
+
+        [Fact]
+        public void SortShouldSortAllPersonByAgeWithComparison()
+        {
+            // Arrange
+            var powerList = new PowerList<Person>();
+            powerList.AddRange(new[]
+            {
+                new Person("Ahmed", 24),
+                new Person("vasko", 21),
+                new Person("Ivan", 33),
+            });
+
+            // Act
+            powerList.Sort((a, b) => a.Age.CompareTo(b.Age));
+
+            // Assert
+            Assert.Equal(3, powerList.Count);
+            Assert.Equal(21, powerList[0].Age);
+            Assert.Equal(24, powerList[1].Age);
+            Assert.Equal(33, powerList[2].Age);
+        }
+
+        [Fact]
+        public void SortShouldSortAllPersonByNameAscendingWithComparison()
+        {
+            // Arrange
+            var powerList = new PowerList<Person>();
+            powerList.AddRange(new[]
+            {
+                new Person("Ahmed", 24),
+                new Person("vasko", 21),
+                new Person("Ivan", 33),
+            });
+
+            // Act
+            powerList.Sort((a, b) => String.Compare(a.Name, b.Name, StringComparison.Ordinal));
+
+            // Assert
+            Assert.Equal(3, powerList.Count);
+            Assert.Equal("Ahmed", powerList[0].Name);
+            Assert.Equal("Ivan", powerList[1].Name);
+            Assert.Equal("vasko", powerList[2].Name);
+        }
+
+        [Fact]
+        public void SortShouldSortAllPersonByNameDescendingWithComparison()
+        {
+            // Arrange
+            var powerList = new PowerList<Person>();
+            powerList.AddRange(new[]
+            {
+                new Person("Ahmed", 24),
+                new Person("vasko", 21),
+                new Person("Ivan", 33),
+            });
+
+            // Act
+            powerList.Sort((a, b) => String.Compare(b.Name, a.Name, StringComparison.Ordinal));
+
+            // Assert
+            Assert.Equal(3, powerList.Count);
+            Assert.Equal("vasko", powerList[0].Name);
+            Assert.Equal("Ivan", powerList[1].Name);
+            Assert.Equal("Ahmed", powerList[2].Name);
         }
     }
 }

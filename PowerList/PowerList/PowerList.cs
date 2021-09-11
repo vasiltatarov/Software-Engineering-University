@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace PowerList
+﻿namespace PowerList
 {
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class PowerList<T> : IPowerList<T>
     {
         private const int DefaultSize = 4;

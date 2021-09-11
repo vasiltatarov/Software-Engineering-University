@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace PowerList.ConsoleApp
+﻿namespace PowerList.ConsoleApp
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     class Program
     {
